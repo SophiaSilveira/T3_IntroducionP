@@ -1,65 +1,85 @@
 #include <stdio.h>
 #include "super.h"
 
-int precoMaior(int numP, struct produto est[] ) {
+int precoMaior(int compa, float aux) {
     int i = 0;
-    float aux = 0;
     int value = 0;
 
-    while(i < numP){
-        if(est[i].precounidade > aux) {
-            aux = est[i].precounidade;
-            value = i;
+    while(i < NumProdutos ){
+        if(compa == 2){
+            if(estoque[i].precounidade > aux) {
+                aux = estoque[i].precounidade;
+                value = i;}
+        }
+        else{
+            if(estoque[i].precounidade < aux) {
+                aux = estoque[i].precounidade;
+                value = i;}
         }
         i++;
     }
     return value;
 }
 
-int precoBetween(float valueM, int numP, struct produto est[] ) {
+int precoBetween(float valueM, int compa, float aux) {
     int i = 0;
-    float aux = 0;
     int value = 0;
 
-    while(i < numP){
-        if(est[i].precounidade > aux && est[i].precounidade < valueM) {
-           aux = est[i].precounidade;
-           value = i;
+    while(i < NumProdutos){
+        if(compa == 2){
+            if(estoque[i].precounidade > aux && estoque[i].precounidade < valueM) {
+               aux = estoque[i].precounidade;
+               value = i;}
+        }
+        else{
+            if(estoque[i].precounidade < aux && estoque[i].precounidade > valueM) {
+               aux = estoque[i].precounidade;
+               value = i;}
         }
         i++;
     }
     return value;
 }
 
-void imprimePreco(char frase[], float value, int numP, struct produto est[] ){
-    printf("\n%s ", frase);
+void imprimePreco(char frase[], float value){
+    printf("\n%s %g:\n", frase, value);
     
     int i = 0;
 
-    while(i < numP){
-        if(est[i].precounidade == value){
-            printf("produto %s que vale %g\n", est[i].nome, est[i].precounidade);
+    while(i < NumProdutos){
+        if(estoque[i].precounidade == value){
+            printf("-%s\n", estoque[i].nome);
         }
         i++;
     }
 }
 
 void main(){
-   // printf("%s", estoque[0].nome);
 
-    int primNum = precoMaior( NumProdutos, estoque );
-  //  printf("Mais caro %g\n",  estoque[primNum].precounidade);
+    printf("Produtos de maior valor por unidade:");
 
-    int secNum = precoBetween(estoque[primNum].precounidade, NumProdutos, estoque);
-  //  printf("Segundo mais caro %g\n",  estoque[secNum].precounidade);
+    int primNum = precoMaior(2, 0);
 
-    int thiNum = precoBetween(estoque[secNum].precounidade, NumProdutos, estoque);
-   // printf("Terceiro mais caro %g",  estoque[thiNum].precounidade);
+    int secNum = precoBetween(estoque[primNum].precounidade, 2, 0);
 
-    imprimePreco("Mais caro", estoque[primNum].precounidade, NumProdutos, estoque);
-    imprimePreco("Segundo mais caro", estoque[secNum].precounidade, NumProdutos, estoque);
-    imprimePreco("Terceiro mais caro", estoque[thiNum].precounidade, NumProdutos, estoque);
+    int thiNum = precoBetween(estoque[secNum].precounidade, 2, 0);
 
+    imprimePreco("Primeiro maior valor", estoque[primNum].precounidade);
+    imprimePreco("Segundo maior valor", estoque[secNum].precounidade);
+    imprimePreco("Terceiro maior valor", estoque[thiNum].precounidade);
+
+    
+    printf("\n\nProdutos de menor valor por unidade:");
+
+    primNum = precoMaior(1, 1000.5);
+
+    secNum = precoBetween(estoque[primNum].precounidade, 1, 1000.5);
+
+    thiNum = precoBetween(estoque[secNum].precounidade, 1, 1000.5);
+
+    imprimePreco("Primeiro menor valor", estoque[primNum].precounidade);
+    imprimePreco("Segundo menor valor", estoque[secNum].precounidade);
+    imprimePreco("Terceiro menor valor", estoque[thiNum].precounidade);
 
 
 }
