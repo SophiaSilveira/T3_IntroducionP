@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "super.h"
 
 struct produto estoqueFimDia[116] = {};
