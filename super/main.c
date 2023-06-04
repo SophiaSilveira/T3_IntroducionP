@@ -6,6 +6,13 @@
 struct produto estoqueFimDia[116] = {};
 
 void gerarEstoque(){
+
+    puts("____________________________________________________\n");
+
+    puts("Estoque fim do dia: \n");
+
+    puts("Num |       Produto      | Cod | QTD | Preco \n");
+
     for(int i = 0; i < NumProdutos; i++){
         estoqueFimDia[i] = estoque[i];
 
@@ -15,7 +22,7 @@ void gerarEstoque(){
             }
         }
         
-        printf("\n%d %s %d %d %g", i + 1, estoqueFimDia[i].nome, estoqueFimDia[i].codigo, estoqueFimDia[i].quantidade, estoqueFimDia[i].precounidade);
+        printf("%3d%22s  %4d  %3d  %5g\n", i + 1, estoqueFimDia[i].nome, estoqueFimDia[i].codigo, estoqueFimDia[i].quantidade, estoqueFimDia[i].precounidade);
     }
 }
 
@@ -104,61 +111,69 @@ void imprime(char frase[], int value, int imp){
 
     for(int i = 0; i < NumProdutos; i++){
         if(estoque[i].precounidade == estoque[value].precounidade && imp == 1){
-            printf("-%s codigo %d\n", estoque[i].nome, estoque[i].codigo);
+            printf("    - %s codigo %d\n", estoque[i].nome, estoque[i].codigo);
         }
 
         else if(estoque[i].quantidade == estoque[value].quantidade && imp == 2){
-            printf("-%s codigo %d\n", estoque[i].nome, estoque[i].codigo);
+            printf("    - %s codigo %d\n", estoque[i].nome, estoque[i].codigo);
         }
 
         else if(estoqueFimDia[i].quantidade == estoqueFimDia[value].quantidade && imp == 3){
-            printf("-%s codigo %d\n", estoqueFimDia[i].nome, estoqueFimDia[i].codigo);
+            printf("    - %s codigo %d\n", estoqueFimDia[i].nome, estoqueFimDia[i].codigo);
         }
     }
+
+    
 }
 
 void main(){
-
-    printf("Produtos de maior valor por unidade:");
+    
+    printf("\nProdutos de maior valor por unidade: ");
 
     int primNum = precoMaior();
     int secNum = precoBetween(estoque[primNum].precounidade);
     int thiNum = precoBetween(estoque[secNum].precounidade);
 
-    imprime("Primeiro maior valor", primNum, 1);
-    imprime("Segundo maior valor", secNum, 1);
-    imprime("Terceiro maior valor", thiNum, 1);
+    imprime("   Primeiro maior valor", primNum, 1);
+    imprime("   Segundo maior valor", secNum, 1);
+    imprime("   Terceiro maior valor", thiNum, 1);
 
-    printf("\n\nProdutos de menor estoque no inicio do dia:");
+    puts("____________________________________________________");
+
+    printf("\nProdutos de menor estoque no inicio do dia:");
 
     primNum = prodMenorI();
     secNum = prodBetweenI(estoque[primNum].quantidade);
     thiNum = prodBetweenI(estoque[secNum].quantidade);
 
-    imprime("Primeira menor quantidade", primNum, 2);
-    imprime("Segunda menor quantidade", secNum, 2);
-    imprime("Terceira menor quantidade", thiNum, 2);
+    imprime("   Primeira menor quantidade", primNum, 2);
+    imprime("   Segunda menor quantidade", secNum, 2);
+    imprime("   Terceira menor quantidade", thiNum, 2);
 
     gerarEstoque();
 
-    printf("\n\nProdutos de menor estoque no fim do dia:");
+    puts("____________________________________________________");
+
+    printf("\nProdutos de menor estoque no fim do dia:");
 
     primNum = prodF(2000, 1);
     secNum = prodBetweenF(estoqueFimDia[primNum].quantidade, 2000, 1);
     thiNum = prodBetweenF(estoqueFimDia[secNum].quantidade, 2000, 1);
 
-    imprime("Primeira menor quantidade", primNum, 3);
-    imprime("Segunda menor quantidade", secNum, 3);
-    imprime("Terceira menor quantidade", thiNum, 3);
+    imprime("   Primeira menor quantidade", primNum, 3);
+    imprime("   Segunda menor quantidade", secNum, 3);
+    imprime("   Terceira menor quantidade", thiNum, 3);
 
-     printf("\n\nProdutos de maior estoque no fim do dia:");
+    puts("____________________________________________________");
+
+    printf("\nProdutos de maior estoque no fim do dia:");
 
     primNum = prodF(0, 2);
     secNum = prodBetweenF(estoqueFimDia[primNum].quantidade, 0, 2);
     thiNum = prodBetweenF(estoqueFimDia[secNum].quantidade, 0, 2);
 
-    imprime("Primeira menor quantidade", primNum, 3);
-    imprime("Segunda menor quantidade", secNum, 3);
-    imprime("Terceira menor quantidade", thiNum, 3);
+    imprime("   Primeira maior quantidade", primNum, 3);
+    imprime("   Segunda maior quantidade", secNum, 3);
+    imprime("   Terceira maior quantidade", thiNum, 3);
  
 }
